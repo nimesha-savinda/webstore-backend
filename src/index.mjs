@@ -2,6 +2,7 @@
 
 import express from "express";
 import productsRouter from "./api/products.mjs";
+import { connectDB } from "./infrastructure/db.mjs";
 //import categoriesRouter from "./api/categories.js";
 
 const app = express();
@@ -11,6 +12,9 @@ app.use("/api/products", productsRouter);
 //app.use("/api/categories", categoriesRouter);
 
 const PORT = 5000;
+
+
+connectDB();
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);

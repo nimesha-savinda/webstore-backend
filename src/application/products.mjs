@@ -1,5 +1,5 @@
 // import express from 'express';
-import Product from '../infrasuture/schema/productschema.mjs';
+import Product from '../infrastructure/schema/productschema.mjs';
 import { createProductDto } from './dto/productsdto.mjs';
 
 const _products = [
@@ -77,8 +77,8 @@ const _products = [
     },
   ];
 
-export const getProducts = (req,res)=>{
-  const Products =  _products;
+export const getProducts = async(req,res)=>{
+  const Products =  await Product.find();
   res.status(200).json(Products).send();
 };
 
@@ -95,7 +95,7 @@ export const getProductById = (req,res)=>{
 };
 
 
-export const createProduct = (req, res) => {
+export const createProduct = async (req, res) => {
 
   //! We need to make sure that the data is always in the correct format
   const product = createProductDto.safeParse(req.body); 
@@ -104,7 +104,7 @@ export const createProduct = (req, res) => {
     return res.status(400).json({ message: `${product.error.message}`}).send();
   }
 
-  Product.push({
+  await Product.push({
     categoryId:product.data.categoryId,
     image: product.data.image,
     name: product.data.name,
