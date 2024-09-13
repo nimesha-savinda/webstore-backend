@@ -1,4 +1,3 @@
-// import express from 'express';
 import Product from '../infrastructure/schema/productschema.mjs';
 import { createProductDto } from './dto/productsdto.mjs';
 
@@ -82,11 +81,12 @@ export const getProducts = async(req,res)=>{
   res.status(200).json(Products).send();
 };
 
-export const getProductById = (req,res)=>{
+export const getProductById = async(req,res)=>{
     const id = req.params.id;
-    const product = _products.find((product)=>
-        product.id === id
-    );
+    const product =  await Product.findById(id).populate('categoryId');
+    // const product = Products.find((product)=>
+    //     product.id === id
+    // );
     if(!product){
         return res.status(404).json("The product is not available..!").send();
     }
@@ -104,7 +104,7 @@ export const createProduct = async (req, res) => {
     return res.status(400).json({ message: `${product.error.message}`}).send();
   }
 
-  await Product.push({
+  await Product.create({
     categoryId:product.data.categoryId,
     image: product.data.image,
     name: product.data.name,

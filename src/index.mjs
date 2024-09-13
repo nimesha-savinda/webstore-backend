@@ -2,6 +2,7 @@
 
 import express from "express";
 import productsRouter from "./api/products.mjs";
+import categoriesRouter from "./api/categories.mjs";
 import { connectDB } from "./infrastructure/db.mjs";
 //import categoriesRouter from "./api/categories.js";
 
@@ -9,9 +10,9 @@ const app = express();
 app.use(express.json());
 
 app.use("/api/products", productsRouter);
-//app.use("/api/categories", categoriesRouter);
+app.use("/api/categories", categoriesRouter);
 
-const PORT = 5000;
+const PORT = 8000;
 
 
 connectDB();
