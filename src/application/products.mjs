@@ -78,7 +78,7 @@ const _products = [
 
 export const getProducts = async(req,res)=>{
   const Products =  await Product.find();
-  res.status(200).json(Products).send();
+  res.status(200).json(Products);
 };
 
 export const getProductById = async(req,res)=>{
@@ -90,7 +90,7 @@ export const getProductById = async(req,res)=>{
     if(!product){
         return res.status(404).json("The product is not available..!").send();
     }
-    return res.status(200).json(product).send();
+    return res.status(200).json(product);
     
 };
 

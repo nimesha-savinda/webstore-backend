@@ -1,16 +1,17 @@
 import { createCategoryDto } from "./dto/categories.mjs";
 import Category from "../infrastructure/schema/categoryschema.mjs";
 
-const categories = [
-  { id: "1", name: "Headphones" },
-  { id: "2", name: "Earbuds" },
-  { id: "3", name: "Speakers" },
-  { id: "4", name: "Mobile Phones" },
-  { id: "5", name: "Smart Watches" },
-];
+// const categories = [
+//   { id: "1", name: "Headphones" },
+//   { id: "2", name: "Earbuds" },
+//   { id: "3", name: "Speakers" },
+//   { id: "4", name: "Mobile Phones" },
+//   { id: "5", name: "Smart Watches" },
+// ];
 
-export const getCategories = (req, res) => {
-  return res.status(200).json(categories).send();
+export const getCategories = async(req, res) => {
+  const categories = await Category.find();
+  return res.status(200).json(categories);
 };
 
 export const createCategory = async (req, res) => {
@@ -27,10 +28,10 @@ export const createCategory = async (req, res) => {
 
 export const getCategoryById = (req, res) => {
   const id = req.params.id;
-  const category = categories.find((category) => category.id === id);
+  const category = Category.find((category) => category.id === id);
   if (!category) {
     return res.status(404).json({ message: "Category not found" }).send();
   }
 
-  return res.status(200).json(category).send();
+  return res.status(200).json(category);
 };
