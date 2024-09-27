@@ -94,6 +94,18 @@ export const getProductById = async(req,res)=>{
     
 };
 
+export const SortProducts = async(req,res)=>{
+  
+  const {value} = req.body;
+  let sortedProducts;
+  if (value==="asc"){
+    sortedProducts = await Product.find().sort({ price: 1 });
+  }else{
+    sortedProducts = await Product.find().sort({ price: -1 });};
+  console.log(SortProducts);
+  res.status(200).json(sortedProducts);
+};
+
 
 export const createProduct = async (req, res) => {
 
